@@ -1,0 +1,11 @@
+#!/bin/ksh
+cd /dumps/var/crash
+ips=$(ls | cut -d- -f1 | sort -u)
+for i in $ips; do
+        hostname=$(getent hosts $i | awk '{print $2}' | sed -e 's/.nike.com//')
+        date=$(ls -d ${i}* | cut -d- -f2-5)
+        for j in $date; do
+                echo "Host $hostname    ($i) had crash on $j"
+        done
+done
+
